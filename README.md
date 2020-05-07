@@ -32,3 +32,9 @@ Rendez vous à l'adresse suivante :
 ```
 http://localhost:8080/fizz-buzz?int1=2&int2=3&limit=10&str1=fizz&str2=buzz
 ```
+
+Pour obtenir la requête la plus demandée :
+
+```
+http://localhost:8080/statistics
+```
