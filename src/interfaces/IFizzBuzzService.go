@@ -1,5 +1,10 @@
 package interfaces
 
+import (
+    "models"
+)
+
 type IFizzBuzzService interface {
-	GetFizzBuzz(int1 int, int2 int, limit int, str1 string, str2 string) ([]string, error)
+	GetFizzBuzz(request models.Request) ([]string, error)
+	GetHighestRequest() (models.Request, error)
 }

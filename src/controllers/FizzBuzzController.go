@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "errors"
 	"interfaces"
+	"models"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -58,7 +59,15 @@ func (controller *FizzBuzzController) ApplyFizzBuzz(writer http.ResponseWriter, 
         return
 	}
 
-	fizzBuzz, err := controller.GetFizzBuzz(int1, int2, limit, str1, str2)
+    request := models.Request{
+                 Int1: int1,
+                 Int2: int2,
+                 Limit: limit,
+                 Str1: str1,
+                 Str2: str2,
+                 Hits: 1,
+               }
+	fizzBuzz, err := controller.GetFizzBuzz(request)
 
 	if err != nil {
         ManageError(writer, err, encoder)
@@ -67,6 +76,20 @@ func (controller *FizzBuzzController) ApplyFizzBuzz(writer http.ResponseWriter, 
 
     writer.WriteHeader(200)
 	encoder.Encode(fizzBuzz)
+}
+
+func (controller *FizzBuzzController) GetStatistics(writer http.ResponseWriter, req *http.Request) {
+    request, err := controller.GetHighestRequest()
+
+    if (err != nil) {
+        writer.WriteHeader(404)
+        encoder := json.NewEncoder(writer)
+        encoder.Encode(err.Error())
+        return
+    }
+
+    writer.WriteHeader(200)
+    json.NewEncoder(writer).Encode(request)
 }
 
 func ManageError(writer http.ResponseWriter, e error, encoder *json.Encoder) {

@@ -16,6 +16,7 @@ func (router *router) InitRouter() *chi.Mux {
 
 	r := chi.NewRouter()
 	r.HandleFunc("/fizz-buzz", fizzBuzzController.ApplyFizzBuzz)
+	r.HandleFunc("/statistics", fizzBuzzController.GetStatistics)
 
 	return r
 }
